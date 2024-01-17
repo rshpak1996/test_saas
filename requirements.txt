@@ -1,0 +1,9 @@
+configparser==6.0.0
+email-validator==2.0.0.post2
+fastapi==0.103.2
+psycopg2==2.9.7
+pydantic==2.3.0
+pydantic_core==2.6.3
+uvicorn==0.23.2
+bcrypt~=4.0.1
+requests==2.31.0
