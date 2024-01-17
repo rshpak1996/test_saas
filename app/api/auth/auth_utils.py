@@ -21,7 +21,7 @@ def is_valid_uuid(value):
 
 
 # Модель для данных пользователя
-class Integration(BaseModel):
+class Users(BaseModel):
     id: int
     title: str
 
@@ -30,10 +30,10 @@ class Integration(BaseModel):
 def verify_token(token: HTTPBearer() = Depends(http_bearer)):
     if not is_valid_uuid(token.credentials):
         raise HTTPException(status_code=401, detail="Authorization error")
-    integrations = onlihub_objects.onliub_object('integrations')
-    integrations.getByFilter({"onlihub_token": token.credentials})
-    if integrations.isEmpty():
+    user = onlihub_objects.onliub_object('Users')
+    user.getByFilter({"onlihub_token": token.credentials})
+    if user.isEmpty():
         raise HTTPException(status_code=401, detail="Authorization error")
     else:
-        return Integration(id=integrations.id, title=integrations.title)
+        return Users(id=user.id, title=user.title)
 
