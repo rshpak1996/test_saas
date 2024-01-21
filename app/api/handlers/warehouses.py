@@ -2,6 +2,7 @@ from . import *
 from fastapi import APIRouter
 import app.api.models.warehouses as ware_mod
 import app.api.processing.warehouses as ware_proc
+from fastapi import Path
 
 router = APIRouter()
 
@@ -34,3 +35,18 @@ def r_get_warehouse(warehouses_id):
     if not item:
         raise HTTPException(status_code=404, detail="Warehouse not found")
     return item[0]
+
+
+@router.delete(
+    "/warehouses/{warehouses_id}",
+    response_model=ware_mod.DetailsResponse,
+    responses=ware_mod.common_responses_dell,
+    summary="Delete an existing warehouse",
+    description="Delete a single warehouse specified by the warehouse ID in the path.",
+    tags=['Warehouses'],
+    operation_id="delete_warehouse"
+)
+def r_delete_warehouse(
+    warehouses_id: int = Path(..., title="Warehouse ID", description=ware_mod.warehouse_id_description),
+):
+    ware_proc.delete_warehouse(warehouses_id)

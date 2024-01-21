@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 from database import psql
 
 
@@ -26,3 +27,17 @@ def get_warehouses(warehouse_id: int = None) -> dict:
         print(e)
         data = {"data": []}
     return data
+
+
+def delete_warehouse(warehouse_id: int):
+    sql = f"""
+    DELETE FROM warehouses
+    WHERE id = {warehouse_id}
+    RETURNING *
+    """
+
+    try:
+        psql.sql_fetchall(sql)[0]
+    except:
+        raise HTTPException(status_code=404, detail="Warehouse not found")
+    raise HTTPException(status_code=200, detail="Warehouse deleted")

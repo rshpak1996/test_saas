@@ -35,6 +35,10 @@ class Warehouses(BaseModel):
     data: List[WarehouseResponse]
 
 
+class DetailsResponse(BaseModel):
+    detail: str
+
+
 response_example_warehouse = WarehouseResponse(
             id=111222,
             title="Warehouse 1",
@@ -62,6 +66,30 @@ response_example_warehouses = Warehouses(
         ),
     ]
 )
+
+
+common_responses_dell = {
+    200: {
+        "description": "Success",
+        "content": {
+            "application/json": {
+                "example": {"detail": "Warehouse has been deleted"}
+            }
+        }},
+    400: standard.bad_request,
+    401: standard.auth_error,
+    404: {
+        "description": "Not Found",
+        "content": {
+            "application/json": {
+                "example": {
+                    "detail": "Warehouse was not found"
+                }
+            }
+        }
+    }
+}
+
 
 # Создаем общие примеры ответов, используя type_responses
 common_responses_one = {
