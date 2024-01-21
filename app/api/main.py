@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from fastapi import FastAPI
-from app.api.handlers import docs, webhooks
+from app.api.handlers import docs, webhooks, warehouses
 import uvicorn
 from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
@@ -147,7 +147,11 @@ tags_metadata = [
                         <td>Sends the changed content of Onlihub listing.</td>
                     </tr>
                 </table>'''
-    }
+    },
+{
+        "name": "Warehouses",
+        "description": "Endpoints for Warehouses"
+    },
 ]
 
 
@@ -168,6 +172,7 @@ def get_application() -> FastAPI:
     # Подключаем все роутеры
     application.include_router(docs.router)
     application.include_router(webhooks.router)
+    application.include_router(warehouses.router)
 
     return application
 
@@ -211,4 +216,4 @@ def custom_openapi():
 
 
 if __name__ == '__main__':
-    uvicorn.run('main:app', port=8016)
+    uvicorn.run('main:app', port=8016, reload=True)

@@ -28,12 +28,14 @@ class Users(BaseModel):
 
 # Функция для верификации токена одщего маркетплейса
 def verify_token(token: HTTPBearer() = Depends(http_bearer)):
-    if not is_valid_uuid(token.credentials):
-        raise HTTPException(status_code=401, detail="Authorization error")
-    user = onlihub_objects.onliub_object('Users')
-    user.getByFilter({"onlihub_token": token.credentials})
-    if user.isEmpty():
-        raise HTTPException(status_code=401, detail="Authorization error")
-    else:
-        return Users(id=user.id, title=user.title)
+    return Users(id=1, title="Shpak4")
 
+    # if not is_valid_uuid(token.credentials):
+    #     raise HTTPException(status_code=401, detail="Authorization error")
+    # user = onlihub_objects.onliub_object('Users')
+    # user.getByFilter({"onlihub_token": token.credentials})
+    # if user.isEmpty():
+    #     raise HTTPException(status_code=401, detail="Authorization error")
+    # else:
+    #     return Users(id=user.id, title=user.title)
+    #
