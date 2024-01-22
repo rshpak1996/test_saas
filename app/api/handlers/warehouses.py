@@ -37,6 +37,22 @@ def r_get_warehouse(warehouses_id):
     return item[0]
 
 
+@router.post(
+    "/warehouses",
+    response_model=ware_mod.WarehouseResponse,
+    responses=ware_mod.common_responses_one,
+    summary="Create warehouse",
+    description="The endpoint allows you to create a new warehouse",
+    tags=['Warehouses'],
+    operation_id="create_warehouse"
+)
+def r_create_warehouse(
+        # TODO: missed integration_id
+        data: ware_mod.WarehouseBase = Body(..., example=ware_mod.request_example_one)
+):
+    return ware_proc.create_warehouse(data)
+
+
 @router.delete(
     "/warehouses/{warehouses_id}",
     response_model=ware_mod.DetailsResponse,

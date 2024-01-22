@@ -7,6 +7,7 @@ import app.api.models.standard as standard
 warehouse_id_description = "Onlihub unique warehouse id"
 title_description = "Title of your warehouse"
 user_id_description = "Onlihub unique user id"
+integration_id_description = "Onlihub unique integration id"
 
 
 class WarehouseStatuses(str, Enum):
@@ -23,12 +24,18 @@ class WarehouseStatuses(str, Enum):
     not_active = 'NotActive'
 
 
+class WarehouseBase(BaseModel):
+    title: str = Field(..., description=title_description)
+    user_id: int = Field(..., description=user_id_description)
+    integration_id: int = Field(..., description=integration_id_description)
+
+
 class WarehouseResponse(BaseModel):
-    id: int = Field(..., description=warehouse_id_description)
+    warehouse_id: int = Field(..., description=warehouse_id_description)
     title: str = Field(..., description=title_description)
     user_id: int = Field(..., description=user_id_description)
     integration_title: str = Field(...)
-    warehouse_status_title: str = Field(...)
+    status_title: WarehouseStatuses
 
 
 class Warehouses(BaseModel):
@@ -39,30 +46,37 @@ class DetailsResponse(BaseModel):
     detail: str
 
 
+request_example_one = WarehouseBase(
+    title="Warehouse 1",
+    user_id=333444,
+    integration_id=555666,
+)
+
+
 response_example_warehouse = WarehouseResponse(
-            id=111222,
+            warehouse_id=111222,
             title="Warehouse 1",
             user_id=333444,
             integration_title='Integration 1',
-            warehouse_status_title=WarehouseStatuses.active
+            status_title=WarehouseStatuses.active
         )
 
 
 response_example_warehouses = Warehouses(
     data=[
         WarehouseResponse(
-            id=111222,
+            warehouse_id=111222,
             title="Warehouse 1",
             user_id=333444,
             integration_title='Integration 1',
-            warehouse_status_title=WarehouseStatuses.active
+            status_title=WarehouseStatuses.active
         ),
         WarehouseResponse(
-            id=111223,
+            warehouse_id=111223,
             title="Warehouse 2",
             user_id=333445,
             integration_title='Integration 2',
-            warehouse_status_title=WarehouseStatuses.not_active
+            status_title=WarehouseStatuses.not_active
         ),
     ]
 )
