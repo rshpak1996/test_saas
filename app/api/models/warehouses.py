@@ -30,6 +30,13 @@ class WarehouseBase(BaseModel):
     integration_id: int = Field(..., description=integration_id_description)
 
 
+class WarehousePut(BaseModel):
+    title: str = Field(..., description=title_description)
+    user_id: int = Field(..., description=user_id_description)
+    integration_id: int = Field(..., description=integration_id_description)
+    status_title: WarehouseStatuses
+
+
 class WarehouseResponse(BaseModel):
     warehouse_id: int = Field(..., description=warehouse_id_description)
     title: str = Field(..., description=title_description)

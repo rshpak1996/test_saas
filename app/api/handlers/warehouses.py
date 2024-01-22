@@ -53,6 +53,23 @@ def r_create_warehouse(
     return ware_proc.create_warehouse(data)
 
 
+@router.put(
+    "/warehouses",
+    response_model=ware_mod.WarehouseResponse,
+    responses=ware_mod.common_responses_one,
+    summary="Update existing warehouse",
+    description="The endpoint allows you to update existing warehouse",
+    tags=['Warehouses'],
+    operation_id="update_warehouse"
+)
+def r_update_warehouse(
+        warehouse_id: int,
+        # TODO: missed integration_id
+        data: ware_mod.WarehousePut = Body(..., example=ware_mod.request_example_one)
+):
+    return ware_proc.update_warehouses(warehouse_id, data)
+
+
 @router.delete(
     "/warehouses/{warehouses_id}",
     response_model=ware_mod.DetailsResponse,
